@@ -1,0 +1,38 @@
+<sly data-sly-use.templates="core/wcm/components/commons/v1/templates.html" data-sly-call="${templates.placeholder @ isEmpty = !properties.rootPath}">
+    <p data-emptytext="${component.title}"></p>
+</sly>
+
+<sly data-sly-use.topNav="HeaderComponent">
+<div class="main-header">
+     <div class="header-mainmenu">
+	      <div class="header_container">
+			<sly data-sly-test="${properties.rootPath}">
+				<sly data-sly-list.readHeader="${topNav.childrenList}">
+					<sly data-sly-test="${readHeaderList.count <= topNav.maxItemShown}">
+						<sly data-sly-use.navigation="${'HeaderComponent' @navMenuRootPath=readHeader.path}"></sly>
+					    <div class="header-title ${navigation.active ? 'active' : ''}" onclick="ChangeLocationURL('0_${readHeader.name @context='unsafe'}');">
+							<div class="header_content">
+								<a href="${readHeader.path @extension='html'}" id="0_${redHeader.name @context='unsafe'}">${readHeader.properties[navTitle] ? readHeader.properties['navTitle'] : readHeader.title}</a>
+							</div>
+						</div>
+					</sly>
+				</sly>
+			</sly>
+		  </div>
+     </div>
+	 <div class="header-submenu">
+		<div class="header_container">
+			<sly data-sly-list.navigation="${topNav.firstLevelMenuItems}">
+				<sly data-sly-use.navColumn="${'HeaderComponent' @navTitlePath=navigation.path}"></sly>
+					<sly data-sly-test="${navigation.listChildren}">
+						<div class="header-submenu rel">
+							<sly data-sly-use.navSplit="${'HeaderComponent' @navTitle=navigation.title}"></sly>
+							<div class="header-submenu-text">
+								${navSplit.finalText @context='html'}
+							</div>
+						</div>
+					</sly>
+				</sly>	
+		</div>
+	 </div>
+</div>
